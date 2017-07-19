@@ -1,7 +1,7 @@
 class threeproxy::params {
 
-  $package_name='threeproxy'
-  $service_name='threeproxy'
+  $package_name='3proxy'
+  $service_name='3proxy'
 
   case $::osfamily
   {

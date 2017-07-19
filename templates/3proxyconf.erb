@@ -129,6 +129,12 @@ auth none
 proxy -n -p<%= @port %><% if @anonymous %> -a<% else %> -a1<% end %>
 
 auth none
+<% if defined?(@upstream_proxy_ip) -%>
+# parent <weight> <type> <ip>    <port> <username> <password>
+parent 1000     http   <%= @upstream_proxy_ip %> <%= @upstream_proxy_port %>
+<% end -%>
+
+
 # pop3p will be used without any authentication. It's bad choice
 # because it's possible to use pop3p to access any port
 # pop3p

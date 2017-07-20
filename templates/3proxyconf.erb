@@ -135,7 +135,7 @@ internal <%= @listen %>
 auth iponly
 <% if defined?(@upstream_proxy_ip) -%>
 allow *
-parent 1000 connect <%= @upstream_proxy_ip %> <%= @upstream_proxy_port %>
+parent 1000 http <%= @upstream_proxy_ip %> <%= @upstream_proxy_port %>
 <% end -%>
 proxy -n -p<%= @port %><% if @anonymous %> -a<% else %> -a1<% end %>
 

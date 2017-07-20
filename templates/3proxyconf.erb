@@ -126,13 +126,16 @@ auth none
 #allow * * * 80-88,8080-8088 HTTP
 #allow * * * 443,8443 HTTPS
 
+<% if defined?(@upstream_proxy_ip) -%>
+allow * * * 80
+# parent <weight> <type> <ip>    <port> <username> <password>
+parent   1000     connect   <%= @upstream_proxy_ip %> <%= @upstream_proxy_port %>
+<% end -%>
+
 proxy -n -p<%= @port %><% if @anonymous %> -a<% else %> -a1<% end %>
 
 auth none
-<% if defined?(@upstream_proxy_ip) -%>
-# parent <weight> <type> <ip>    <port> <username> <password>
-parent 1000     http   <%= @upstream_proxy_ip %> <%= @upstream_proxy_port %>
-<% end -%>
+
 
 
 # pop3p will be used without any authentication. It's bad choice

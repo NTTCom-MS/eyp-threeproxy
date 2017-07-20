@@ -65,9 +65,9 @@ archiver gz /bin/gzip %F
 rotate 30
 # We will keep last 30 log files
 
-auth iponly
-#auth nbname
-#auth strong
+# auth iponly
+# auth nbname
+# auth strong
 # auth specifies type of user authentication. If you specify none proxy
 # will not do anything to check name of the user. If you specify
 # nbname proxy will send NetBIOS name request packet to UDP/137 of
@@ -105,11 +105,9 @@ external <%= @bind %>
 # have open proxy in your network in this case.
 internal <%= @listen %>
 
-auth none
-# no authentication is requires
-
+# auth none
+# no authentication is required
 # dnspr
-
 # dnsproxy listens on UDP/53 to answer client's DNS requests. It requires
 # nserver/nscache configuration.
 
@@ -126,18 +124,16 @@ auth none
 #allow * * * 80-88,8080-8088 HTTP
 #allow * * * 443,8443 HTTPS
 
+auth none
 <% if defined?(@upstream_proxy_ip) -%>
-allow * * * 80
+allow *
 # parent <weight> <type> <ip>    <port> <username> <password>
 parent   1000     connect   <%= @upstream_proxy_ip %> <%= @upstream_proxy_port %>
 <% end -%>
 
 proxy -n -p<%= @port %><% if @anonymous %> -a<% else %> -a1<% end %>
 
-auth none
-
-
-
+# auth none
 # pop3p will be used without any authentication. It's bad choice
 # because it's possible to use pop3p to access any port
 # pop3p

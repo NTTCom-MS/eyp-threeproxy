@@ -124,13 +124,18 @@ internal <%= @listen %>
 #allow * * * 80-88,8080-8088 HTTP
 #allow * * * 443,8443 HTTPS
 
+# exemple
+# allow *
+# parent 1000 127.0.0.1 3333
+# proxy -a -n -p3127
+
 auth none
 <% if defined?(@upstream_proxy_ip) -%>
-allow *
-# parent <weight> <type> <ip>    <port> <username> <password>
-parent   1000     connect   <%= @upstream_proxy_ip %> <%= @upstream_proxy_port %>
+allow * * * 80-88,8080-8088 HTTP
+parent 1000 connect <%= @upstream_proxy_ip %> <%= @upstream_proxy_port %>
+allow * * * 443,8443 HTTPS
+parent 1000 connect <%= @upstream_proxy_ip %> <%= @upstream_proxy_port %>
 <% end -%>
-
 proxy -n -p<%= @port %><% if @anonymous %> -a<% else %> -a1<% end %>
 
 # auth none

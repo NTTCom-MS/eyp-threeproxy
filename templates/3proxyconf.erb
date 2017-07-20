@@ -29,7 +29,7 @@ nscache 65536
 timeouts 1 5 30 60 180 1800 15 60
 # Here we can change timeout values
 
-users 3APA3A:CL:3apa3a "test:CR:$1$qwer$CHFTUFGqkjue9HyhcMHEe1"
+# users 3APA3A:CL:3apa3a "test:CR:$1$qwer$CHFTUFGqkjue9HyhcMHEe1"
 # note that "" required, overvise $... is treated as include file name.
 # $1$qwer$CHFTUFGqkjue9HyhcMHEe1 is 'test' in MD5 crypt format.
 #users $/usr/local/etc/3proxy/passwd
@@ -132,12 +132,12 @@ internal <%= @listen %>
 # allow * * * 80-88,8080-8088 HTTP
 # parent 1000 http 127.0.0.1 3128
 
-auth none
+auth iponly
 <% if defined?(@upstream_proxy_ip) -%>
 allow *
-parent 1000 connect <%= @upstream_proxy_ip %> <%= @upstream_proxy_port %>
+parent 1000 http <%= @upstream_proxy_ip %> <%= @upstream_proxy_port %>
 <% end -%>
-proxy -n -p<%= @port %><% if @anonymous %> -a<% else %> -a1<% end %>
+proxy -n -p<%= @port %><% if @anonymous %> -a<% else %> -a1<% end %> -T
 
 # auth none
 # pop3p will be used without any authentication. It's bad choice

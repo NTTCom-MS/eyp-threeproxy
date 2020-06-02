@@ -14,8 +14,6 @@ class threeproxy(
                   $upstream_proxy_port   = '3128',
                 ) inherits threeproxy::params{
 
-  validate_re($package_ensure, [ '^present$', '^installed$', '^absent$', '^purged$', '^held$', '^latest$' ], 'Not a supported package_ensure: present/absent/purged/held/latest')
-
   class { '::threeproxy::install': }
   -> class { '::threeproxy::config': }
   ~> class { '::threeproxy::service': }
